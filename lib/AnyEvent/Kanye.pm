@@ -3,11 +3,14 @@ package AnyEvent::Kanye;
 use strict;
 use warnings;
 
+use utf8;
+
 use AnyEvent ();
+use Lingua::EN::Inflect qw(PL);
 
 BEGIN { our @ISA = "AnyEvent::CondVar" }
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 sub condvar {
 	my ( $class, @args ) = @_;
@@ -16,11 +19,12 @@ sub condvar {
 
 sub send {
 	my ( $self, $thing ) = @_;
+	my $name = ref($thing) || 'value';
 
 	$self->SUPER::send(
-		"This value is pretty good, and I'm going to let " .
-		" you finish, but Beyonce had one of the best "    . 
-		(ref($thing) || "value") . " of all times!"
+		"This $name is pretty good, and I'mma let "    .
+		"you finish, but Beyoncé had one of the best " .
+		PL($name) . " of all time!"
 	);
 }
 
